@@ -1,4 +1,5 @@
-import { create } from "zustand";
+import {create} from "zustand";
+import { data } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 export const useAuthStore = create((set) => ({
     authUser: null,
@@ -19,4 +20,6 @@ export const useAuthStore = create((set) => ({
             set({ isCheckingAuth: false});
         }
     },
+   signup: async(data) => {
+   }
 }));
