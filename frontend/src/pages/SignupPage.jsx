@@ -3,20 +3,45 @@ import { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import { Eye, EyeOff, Lock, Loader2, Mail, MessageSquare, User } from "lucide-react"
 import { Link } from 'react-router-dom'
-const SignupPage = () => {
+import AuthImagePattern from '../components/AuthImagePattern'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
+const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   })
-  const { signup, isSigningUp } = useAuthStore();
+  const { signup, isSigningUp,authUser } = useAuthStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser]);
+  const validateForm = () => { 
+    if(!formData.fullName.trim())
+      return toast.error("Full name is required");
+    if(!formData.email.trim())
+      return toast.error("Email is required");
+    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+    if(!formData.password.trim())
+      return toast.error("Password is required");
+    if(formData.password.length < 6)
+      return toast.error("Password must be at least 6 characters");
 
-  const validateForm = () => { }
+    return true;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+
+    const success = validateForm();
+     if (success === true) signup(formData);
   }
 
 
@@ -109,9 +134,34 @@ const SignupPage = () => {
                 </button>
               </div>
             </div>
+             <button type="submit" className="btn btn-primary w-full" disabled={isSigningUp}>
+              {isSigningUp ? (
+                <>
+                  <Loader2 className="size-5 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "Create Account"
+              )}
+            </button>
           </form>
+
+          <div className="text-center">
+            <p className="text-base-content/60">
+              Already have an account?{" "}
+              <Link to="/login" className="link link-primary">
+                Sign in
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
+      {/* right */}
+<AuthImagePattern
+title="Join the community"
+subtitle="Connect with like-minded individuals and share your thoughts."
+/>
+
     </div>
   );
 };

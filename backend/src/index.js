@@ -19,8 +19,9 @@ app.use(cors(
         credentials: true
     }
 ))
+
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-    console.log('Server is running on PORT :'+PORT)
-    connectDB();
+    console.log('Server is running on PORT :', +PORT)
+   connectDB();
 })
