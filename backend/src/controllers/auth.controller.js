@@ -6,10 +6,10 @@ import cloudinary from "../lib/cloudinary.js"
 
 
 export const signup = async (req, res) => {
-    const { fullname, email, password } = req.body //will ask user
+    const { fullName, email, password } = req.body //will ask user
     try {
 
-        if (!fullname || !email || !password)
+        if (!fullName || !email || !password)
             return res.status(400).json({ message: "All fields are required" })
         //hash passwords
         if (password.length < 6)
@@ -25,7 +25,7 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
         const newUser = new User({
-            fullname: fullname,
+            fullName: fullName,
             email: email,
             password: hashedPassword
         })
@@ -35,10 +35,9 @@ export const signup = async (req, res) => {
             await newUser.save()
             res.status(201).json({
                 _id: newUser._id,
-                fullname: newUser.fullname,
+                fullName: newUser.fullName,
                 email: newUser.email,
-                profilePic: newUser.profilePic,
-
+                profilePic: newUser.profilePic
             })
         }
         else {
@@ -65,7 +64,9 @@ export const login = async (req, res) => {
         generateToken(user._id, res)
         res.status(200).json({
             _id: user._id,
-            fullname: user.fullname,
+           fullName: user.fullName
+           
+           ,
             email: user.email,
             profilePic: user.profilePic,
 
@@ -112,4 +113,4 @@ export const checkAuth = (req, res) => {
         console.log("Error in checkAuth:", error.message)
         res.status(500).json({ message: "Internal server error" })
     }
-}    
+}
