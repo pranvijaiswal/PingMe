@@ -8,6 +8,8 @@ export const useAuthStore = create((set, get) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
+  isSendingResetEmail: false,
+  isResettingPassword: false,
 
   checkAuth: async () => {
     try {
@@ -74,6 +76,31 @@ export const useAuthStore = create((set, get) => ({
       toast.error(error.response.data.message);
     } finally {
       set({ isUpdatingProfile: false });
+    }
+  },
+
+  forgotPassword: async (email) => {
+    set({ isSendingResetEmail: true });
+    try {
+      await axiosInstance.post("/auth/forgot-password", { email });
+      toast.success("Password reset email sent! Check your inbox.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to send reset email");
+    } finally {
+      set({ isSendingResetEmail: false });
+    }
+  },
+
+  
+  resetPassword: async (token, newPassword) => {
+    set({ isResettingPassword: true });
+    try {
+      await axiosInstance.post(`/auth/reset-password/${token}`, { password: newPassword });
+      toast.success("Password reset successfully. You can now login.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to reset password");
+    } finally {
+      set({ isResettingPassword: false });
     }
   },
   
