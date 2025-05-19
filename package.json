@@ -1,0 +1,21 @@
+{
+  "name": "pingme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "build": "",
+   "start":""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranvijaiswal/PingMe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranvijaiswal/PingMe/issues"
+  },
+  "homepage": "https://github.com/pranvijaiswal/PingMe#readme"
+}
