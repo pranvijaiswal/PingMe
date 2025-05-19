@@ -1,0 +1,57 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+*.out
+*.pid
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+.cache/
+coverage/
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.mdb
+*.sql
+*.bak
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+
+# Misc
+*.tgz
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.log.*
+
+# Test output
+test-results/
+coverage/
+nyc_output/
