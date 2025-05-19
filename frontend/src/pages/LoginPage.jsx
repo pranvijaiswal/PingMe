@@ -74,17 +74,17 @@ const LoginPage = () => {
                               value={formData.password}
                               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-base-content/40" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-base-content/40" />
-                  )}
-                </button>
+                                 <button
+                                 type="button"
+                                 className="inset-y-0 right-0 pr-3 flex items-center"
+                                 onClick={() => setShowPassword(!showPassword)}
+                               >
+                                 {showPassword ? (
+                                   <EyeOff className="size-5 text-base-content/40" />
+                                 ) : (
+                                   <Eye className="size-5 text-base-content/40" />
+                                 )}
+                               </button>
               </div>
                <div className="flex justify-between mt-2">
                 
