@@ -119,7 +119,13 @@ export const forgotPassword = async (req, res) => {
         user.resetTokenExpiry = resetTokenExpiry;
         await user.save();
 
-        const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+        const frontendUrl = process.env.NODE_ENV === 'development' //fix
+          ? 'http://localhost:5173'
+          : 'https://pingme-63rt.onrender.com';
+
+        const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
+
+        
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
