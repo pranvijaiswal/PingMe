@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
-import toast  from "react-hot-toast";
-import {io} from "socket.io-client";
+import toast from "react-hot-toast";
+import { io } from "socket.io-client";
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
-   
+
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isCheckingAuth: true,
@@ -12,10 +12,10 @@ export const useAuthStore = create((set, get) => ({
   isUpdatingProfile: false,
   isSendingResetEmail: false,
   isResettingPassword: false,
-   onlineUsers: [],
-   socket: null,
- 
-   
+  onlineUsers: [],
+  socket: null,
+
+
   checkAuth: async () => {
     try {
       const response = await axiosInstance.get("/auth/check");
@@ -38,7 +38,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Account created successfully");
 
-        get().connectSocket();
+      get().connectSocket();
     }
     catch (error) {
       toast.error(error.response.data.message);
@@ -72,7 +72,7 @@ export const useAuthStore = create((set, get) => ({
       set({ isLoggingIn: false });
     }
   },
-   updateProfile: async (data) => {
+  updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
       const res = await axiosInstance.put("/auth/updateProfilePic", data);
@@ -98,7 +98,7 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  
+
   resetPassword: async (token, newPassword) => {
     set({ isResettingPassword: true });
     try {
@@ -113,7 +113,7 @@ export const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
-   const socket = io(BASE_URL, {
+    const socket = io(BASE_URL, {
       query: {
         userId: authUser._id,
       },
@@ -129,6 +129,6 @@ export const useAuthStore = create((set, get) => ({
 
   disconnectSocket: () => {
     if (get().socket?.connected) get().socket.disconnect();
-    }
-  
+  }
+
 }));
